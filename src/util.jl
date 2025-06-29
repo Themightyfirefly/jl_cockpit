@@ -5,6 +5,9 @@ struct Datapoint
     batch::Int
     loss::Float32
     grads #TODO define the type!
+    params_before
+    params_after
+    params_init
 end
 
 # Extending the function push! to ensure the Observable is triggered

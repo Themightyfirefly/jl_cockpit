@@ -13,7 +13,7 @@ end
 
 Initialises the visualiser. It will take the given Observables and display a plot that updates live. 
 """
-function visualiser(; batch_size = 1, vis_loss::Bool = false, vis_grad_norm::Bool = false)
+function visualiser(; batch_size = 1, vis_loss::Bool = false, vis_grad_norm::Bool = false, vis_update_size::Bool = false, vis_distance::Bool = false)
     
     datapoints = Observable{Vector{Datapoint}}([])
 
@@ -21,7 +21,9 @@ function visualiser(; batch_size = 1, vis_loss::Bool = false, vis_grad_norm::Boo
     
     vis_loss && loss_plot!(fig, datapoints)
     vis_grad_norm && grad_norm_plot!(fig, datapoints)
-    
+    vis_update_size && update_size_plot!(fig, datapoints)
+    vis_distance && distance_plot!(fig, datapoints)
+
     display(fig)
 
     return visualiser(datapoints, batch_size)
