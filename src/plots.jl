@@ -58,3 +58,23 @@ function grad_norm_plot!(fig, datapoints::Observable{Vector{Datapoint}})
 
     return ax_grad_norm
 end
+
+mutable struct Plot_hist_1d
+    plot_exists::Bool
+    grad_elems::Observable{Vector{Float32}}
+end
+
+function hist_1d_plot!(fig, datapoints::Observable{Vector{Datapoint}})
+    pd_hist_1d = Plot_hist_1d(false, Observable{Vector{Float32}}([]))
+    ax_hist_1d = Axis(fig[1, 2], xlabel = "", ylabel = "", title = "Gradient Element Histogram")
+
+    on(datapoints) do data
+        pd_hist_1d.grad_elems[] = myflatten(data[end].grads)
+        if !pd_hist_1d.plot_exists
+            pd_hist_1d.plot_exists = true
+            hist!(ax_hist_1d, pd_hist_1d.grad_elems, bins = 50, color = Makie.wong_colors()[4], strokewidth = 1, strokecolor = :white, normalization = :pdf)
+        end
+        
+    end
+
+end

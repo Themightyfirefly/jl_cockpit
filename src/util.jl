@@ -29,7 +29,11 @@ function push!(obs::Observable{Vector{Datapoint}}, dp::Datapoint)
     obs[] = obs[]
 end
 
-
+import Base.append!
+function append!(obs::Observable{Vector{T}}, val_vector::Vector{T}) where {T<:Real}
+    append!(obs[], val_vector)
+    obs[] = obs[]
+end
 
 # Grad flatten as provided by Adrian
 

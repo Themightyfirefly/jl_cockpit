@@ -5,7 +5,6 @@ include("plots.jl")
 #TODO struct should be capitalized
 struct visualiser
     datapoints::Observable{Vector{Datapoint}}
-    batch_size::Int64
 end
 
 """
@@ -13,18 +12,23 @@ end
 
 Initialises the visualiser. It will take the given Observables and display a plot that updates live. 
 """
-function visualiser(; batch_size = 1, vis_loss::Bool = false, vis_grad_norm::Bool = false)
+function visualiser(; vis_loss::Bool = true, vis_grad_norm::Bool = true, vis_hist_1d = true)
+    GLMakie.activate!()
+    GLMakie.closeall()
     
     datapoints = Observable{Vector{Datapoint}}([])
 
-    fig = Figure()
-    
-    vis_loss && loss_plot!(fig, datapoints)
-    vis_grad_norm && grad_norm_plot!(fig, datapoints)
-    
-    display(fig)
+    with_theme(theme_black()) do
+        fig = Figure()
+        
+        vis_loss && loss_plot!(fig, datapoints)
+        vis_grad_norm && grad_norm_plot!(fig, datapoints)
+        vis_hist_1d && hist_1d_plot!(fig, datapoints)
 
-    return visualiser(datapoints, batch_size)
+        display(fig)
+    end
+
+    return visualiser(datapoints)
 end
 
 export visualiser
