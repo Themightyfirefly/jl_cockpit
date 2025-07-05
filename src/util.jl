@@ -6,7 +6,7 @@ struct Datapoint
     batch::Int
     loss::Union{Float32, Nothing}
     grads::Union{@NamedTuple{Any}, Nothing}
-    params::Zygote.Params{Zygote.Buffer{Any, Vector{Any}}}
+    params::Union{Zygote.Params{Zygote.Buffer{Any, Vector{Any}}}, Nothing}
 end
 
 # Extending the function push! to ensure the Observable is triggered

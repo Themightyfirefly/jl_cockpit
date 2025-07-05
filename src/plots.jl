@@ -22,7 +22,7 @@ function loss_plot!(fig::Makie.Figure, datapoints::Observable{Vector{Datapoint}}
         end
     end
 
-    return ax_loss
+    return losses
 end
 
 """
@@ -44,7 +44,7 @@ function grad_norm_plot!(fig::Makie.Figure, datapoints::Observable{Vector{Datapo
         end
     end
 
-    return ax_grad_norm
+    return grad_norms
 end
 
 """
@@ -68,6 +68,7 @@ function hist_1d_plot!(fig::Makie.Figure, datapoints::Observable{Vector{Datapoin
         end
     end
 
+    return grad_elems
 end
 
 """
@@ -88,6 +89,8 @@ function params_plot!(fig::Makie.Figure, datapoints::Observable{Vector{Datapoint
             hist!(ax_params, params, bins = 50, color = Makie.wong_colors()[3], strokewidth = 0.1, strokecolor = :white)
         end
     end
+
+    return params
 end
 
 """
@@ -111,6 +114,7 @@ function distance_plot!(fig::Makie.Figure, datapoints::Observable{Vector{Datapoi
         end
     end
 
+    return l2_distance
 end
 
 """
@@ -134,4 +138,5 @@ function update_size_plot!(fig::Makie.Figure, datapoints::Observable{Vector{Data
         end
     end
 
+    return l2_distance
 end

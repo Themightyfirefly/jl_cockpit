@@ -20,5 +20,6 @@ module jl_cockpit
     export distance_plot!
     export update_size_plot!
     
-
+    # utils
+    export Datapoint
 end
